@@ -1,0 +1,1 @@
+"""Local ideal-circuit simulation."""

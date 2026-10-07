@@ -1,0 +1,18 @@
+# Core circuit representation and OpenQASM 2 parsing
+qiskit>=1.2,<3
+
+# Simulation, SMT optimization, API, and graph analysis
+qiskit-aer>=0.15,<1
+z3-solver>=4.13,<5
+fastapi>=0.115,<1
+uvicorn[standard]>=0.30,<1
+python-dotenv>=1,<2
+reportlab>=4,<5
+python-multipart>=0.0.9,<1
+networkx>=3.3,<4
+numpy>=1.26
+pandas>=2.2,<4
+
+# Development and API testing
+pytest>=8,<9
+httpx>=0.27,<1

@@ -1,0 +1,20 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+
+# Local configuration and generated artifacts
+.env
+backend/uploads/*
+!backend/uploads/.gitkeep
+backend/generated/*
+!backend/generated/.gitkeep
+backend/reports/*
+!backend/reports/.gitkeep
+
+# Frontend
+node_modules/
+frontend/dist/
+frontend/.env
