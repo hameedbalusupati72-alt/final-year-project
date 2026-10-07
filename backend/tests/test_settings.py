@@ -20,6 +20,9 @@ def test_settings_load_environment_overrides(monkeypatch: pytest.MonkeyPatch):
 
     assert settings.app_name == "Test backend"
     assert settings.cors_allowed_origins == (
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "https://final-year-project-frontend-lyart.vercel.app",
         "https://frontend.example",
         "https://admin.example",
     )
@@ -34,6 +37,21 @@ def test_settings_default_cors_origins_include_local_and_deployed_frontends(
     monkeypatch: pytest.MonkeyPatch,
 ):
     monkeypatch.delenv("CORS_ALLOWED_ORIGINS", raising=False)
+
+    assert Settings.from_environment().cors_allowed_origins == (
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "https://final-year-project-frontend-lyart.vercel.app",
+    )
+
+
+def test_settings_preserve_deployed_origin_when_render_lists_only_local_origins(
+    monkeypatch: pytest.MonkeyPatch,
+):
+    monkeypatch.setenv(
+        "CORS_ALLOWED_ORIGINS",
+        "http://localhost:5173,http://127.0.0.1:5173",
+    )
 
     assert Settings.from_environment().cors_allowed_origins == (
         "http://localhost:5173",

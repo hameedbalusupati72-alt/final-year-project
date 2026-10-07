@@ -23,7 +23,8 @@ def _environment_origins(name: str, default: tuple[str, ...]) -> tuple[str, ...]
     raw_value = os.getenv(name)
     if raw_value is None:
         return default
-    return tuple(origin.strip() for origin in raw_value.split(",") if origin.strip())
+    configured = (origin.strip() for origin in raw_value.split(","))
+    return tuple(dict.fromkeys((*default, *(origin for origin in configured if origin))))
 
 
 @dataclass(frozen=True)
