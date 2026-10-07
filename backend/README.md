@@ -26,6 +26,10 @@ The API listens on `http://127.0.0.1:8000`. OpenAPI docs are available at
 Backend defaults are in `backend\.env.example`; local overrides can be set in
 `backend\.env` or in the process environment. The configurable resource limits
 can be lowered from their supported ceilings, but not raised above them. The
+`CORS_ALLOWED_ORIGINS` setting is a comma-separated list of frontend origins
+that may call the API from a browser. It defaults to the local Vite origins;
+for deployment, set it in the hosting provider's environment to the frontend's
+origin (for example, `https://your-frontend.example`), not the backend API URL.
 standalone analyzer CLI can be run with:
 
 ```powershell

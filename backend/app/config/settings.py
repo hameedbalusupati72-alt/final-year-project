@@ -19,11 +19,22 @@ def _environment_integer(name: str, default: int) -> int:
         raise ValueError(f"Environment variable {name} must be an integer.") from exc
 
 
+def _environment_origins(name: str, default: tuple[str, ...]) -> tuple[str, ...]:
+    raw_value = os.getenv(name)
+    if raw_value is None:
+        return default
+    return tuple(origin.strip() for origin in raw_value.split(",") if origin.strip())
+
+
 @dataclass(frozen=True)
 class Settings:
     """Operational settings aligned with implemented analyzer limits."""
 
     app_name: str = "Quantum Circuit Partitioning Analyzer"
+    cors_allowed_origins: tuple[str, ...] = (
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    )
     max_qasm_characters: int = 1_000_000
     max_qubits: int = 64
     max_instructions: int = 10_000
@@ -64,6 +75,9 @@ class Settings:
         """Load supported settings while retaining safe defaults."""
         return cls(
             app_name=os.getenv("APP_NAME", cls.app_name),
+            cors_allowed_origins=_environment_origins(
+                "CORS_ALLOWED_ORIGINS", cls.cors_allowed_origins
+            ),
             max_qasm_characters=_environment_integer(
                 "MAX_QASM_CHARACTERS",
                 _environment_integer("MAX_QASM_BYTES", cls.max_qasm_characters),
