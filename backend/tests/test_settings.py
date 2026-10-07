@@ -30,7 +30,7 @@ def test_settings_load_environment_overrides(monkeypatch: pytest.MonkeyPatch):
     assert settings.max_shots == 50_000
 
 
-def test_settings_default_cors_origins_are_localhost(
+def test_settings_default_cors_origins_include_local_and_deployed_frontends(
     monkeypatch: pytest.MonkeyPatch,
 ):
     monkeypatch.delenv("CORS_ALLOWED_ORIGINS", raising=False)

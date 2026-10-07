@@ -657,6 +657,7 @@ button:focus-visible, textarea:focus-visible { outline: 2px solid #9280ed; outli
 .qpart-frontend-backend-status.online { color: #81d9b1; }
 .qpart-frontend-backend-status.offline { color: #ffadad; }
 .qpart-frontend-main { min-height: 100vh; margin-left: 250px; }
+.qpart-frontend-main.sidebar-collapsed { margin-left: 0; }
 .qpart-frontend-navbar { position: sticky; z-index: 10; top: 0; min-height: 66px !important; backdrop-filter: blur(14px); }
 .qpart-frontend-navbar-title { font-family: Manrope, sans-serif; }
 .qpart-frontend-content { width: min(1320px, 100%); margin: 0 auto; padding: 28px clamp(18px, 3vw, 40px) 50px; }

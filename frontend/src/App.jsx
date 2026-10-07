@@ -85,7 +85,9 @@ export default function App() {
   const [isValidating, setIsValidating] = useState(false);
   const [isOptimizing, setIsOptimizing] = useState(false);
   const [isSimulating, setIsSimulating] = useState(false);
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(
+    () => window.matchMedia("(min-width: 901px)").matches,
+  );
   const [requirements, setRequirements] = useState({
     max_qubits_per_partition: 2,
     max_partitions: 4,
@@ -245,7 +247,9 @@ export default function App() {
 
   function navigate(page) {
     setActivePage(page);
-    setMobileNavOpen(false);
+    if (window.matchMedia("(max-width: 900px)").matches) {
+      setSidebarOpen(false);
+    }
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -323,18 +327,18 @@ export default function App() {
         items={NAV_ITEMS}
         activeItem={activePage}
         onNavigate={navigate}
-        open
-        onClose={() => setMobileNavOpen(false)}
-        className={mobileNavOpen ? "qpart-frontend-sidebar-open" : ""}
+        open={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+        className={sidebarOpen ? "qpart-frontend-sidebar-open" : ""}
         footer={<span className={`qpart-frontend-backend-status ${apiStatus}`}>{apiStatus === "online" ? "Backend connected" : apiStatus === "checking" ? "Connecting to backend…" : "Backend offline"}</span>}
       />
-      {mobileNavOpen && <button className="qpart-frontend-nav-backdrop" aria-label="Close navigation" onClick={() => setMobileNavOpen(false)} />}
-      <div className="qpart-frontend-main">
+      {sidebarOpen && <button className="qpart-frontend-nav-backdrop" aria-label="Close navigation" onClick={() => setSidebarOpen(false)} />}
+      <div className={`qpart-frontend-main${sidebarOpen ? "" : " sidebar-collapsed"}`}>
         <Navbar
           title={currentTitle}
           subtitle="Quantum Circuit Workspace"
-          onMenuClick={() => setMobileNavOpen((open) => !open)}
-          menuOpen={mobileNavOpen}
+          onMenuClick={() => setSidebarOpen((open) => !open)}
+          menuOpen={sidebarOpen}
           actions={<span className={`qpart-frontend-status-pill ${apiStatus}`}>{apiStatus === "online" ? "Backend online" : apiStatus === "checking" ? "Connecting" : "Backend offline"}</span>}
         />
         <div className="qpart-frontend-content">
