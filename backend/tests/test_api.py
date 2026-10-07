@@ -21,6 +21,14 @@ def test_health_endpoint():
     assert "ideal-simulation" in response.json()["features"]
 
 
+def test_root_endpoint_reports_service_and_health_path():
+    response = client.get("/")
+
+    assert response.status_code == 200
+    assert response.json()["status"] == "ok"
+    assert response.json()["health"] == "/api/health"
+
+
 def test_local_vite_alt_port_is_allowed_by_cors():
     response = client.options(
         "/api/health",
@@ -32,6 +40,20 @@ def test_local_vite_alt_port_is_allowed_by_cors():
 
     assert response.status_code == 200
     assert response.headers["access-control-allow-origin"] == "http://127.0.0.1:5174"
+
+
+def test_deployed_vercel_frontend_is_allowed_by_cors():
+    origin = "https://final-year-project-frontend-lyart.vercel.app"
+    response = client.options(
+        "/api/health",
+        headers={
+            "Origin": origin,
+            "Access-Control-Request-Method": "GET",
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.headers["access-control-allow-origin"] == origin
 
 
 def test_analyze_endpoint_returns_circuit_metrics():

@@ -39,6 +39,17 @@ app.add_middleware(
 )
 
 
+@app.get("/")
+def root() -> dict[str, str]:
+    """Expose a small service landing response at the public API root."""
+    return {
+        "service": settings.app_name,
+        "status": "ok",
+        "health": "/api/health",
+        "docs": "/docs",
+    }
+
+
 @app.get("/api/health")
 def health() -> dict[str, str]:
     """Report API readiness and implemented functional stages."""

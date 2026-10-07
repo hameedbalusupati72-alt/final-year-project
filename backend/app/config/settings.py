@@ -34,6 +34,7 @@ class Settings:
     cors_allowed_origins: tuple[str, ...] = (
         "http://localhost:5173",
         "http://127.0.0.1:5173",
+        "https://final-year-project-frontend-lyart.vercel.app",
     )
     max_qasm_characters: int = 1_000_000
     max_qubits: int = 64

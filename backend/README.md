@@ -39,6 +39,7 @@ python backend\run_analyzer.py path\to\circuit.qasm
 
 ## Endpoints
 
+- `GET /` (service status and links)
 - `GET /api/health`
 - `POST /api/circuits/validate`
 - `POST /api/circuits/analyze`

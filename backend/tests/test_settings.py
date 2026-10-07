@@ -38,6 +38,7 @@ def test_settings_default_cors_origins_are_localhost(
     assert Settings.from_environment().cors_allowed_origins == (
         "http://localhost:5173",
         "http://127.0.0.1:5173",
+        "https://final-year-project-frontend-lyart.vercel.app",
     )
 
 
